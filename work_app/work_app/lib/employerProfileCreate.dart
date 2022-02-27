@@ -23,6 +23,7 @@ class employerScreen extends StatefulWidget {
 class _employerScreenState extends State<employerScreen> {
   //esto es un objeto global que manejara el texto ingresado
   final _textController = TextEditingController();
+  final _expController = TextEditingController();
   final socialController = TextEditingController();
   String _value = "Person";
 
@@ -114,7 +115,7 @@ class _employerScreenState extends State<employerScreen> {
                 //Widget para inout del texto
                 child: TextField(
                   //se indica el controlador de texto definido antes
-                  controller: _textController,
+                  controller: _expController,
                   //al darle return se llamaria a este metodo
                   //onSubmitted: _handleSubmitted,
                   //style -> hara que el chat se ajuste al margen del celular y asi
@@ -346,7 +347,7 @@ class _employerScreenState extends State<employerScreen> {
                 onPressed: () => {
                   _employerFeed(),
                   //sendEmployeeData(String interests, String person_or_business, String location,String socials )
-                  sendEmployeeData(
+                  sendEmployerData(
                       interest, typePerson, area, socialController.text)
                 },
                 icon: Icon(Icons.add),
@@ -361,19 +362,16 @@ class _employerScreenState extends State<employerScreen> {
     );
   } //build
 
-  Future<http.Response> sendEmployeeData(String interests,
+  Future<http.Response> sendEmployerData(String interests,
       String person_or_business, String location, String socials) {
-  
-    return http.post(Uri.parse('http://localhost:3000/employer?interests=' +
-        interests +
-        '&' +
-        'person_or_business=' +
-        person_or_business +
-        '&' +
-        'location=' +
-        location +
-        '&' +
-        'socials=' +
-        socials));
+
+    print("se enviara employer[[[[[[[[[[[[[[[[[[[[[[[[[[");
+  //employee?name='+name+'&'+'experience
+    return http.post(Uri.parse('http://localhost:3000/employer?'
+        'interests=' + interests + '&' +
+        'person_or_business=' + person_or_business + '&' +
+        'location=' + location + '&' +
+        'socials=' + socials
+    ));
   }
 }

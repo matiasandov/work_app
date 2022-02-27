@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:work_app/feedEmployee.dart';
+import 'package:work_app/lastRoute.dart';
 import 'category_constants.dart';
 import 'db_controller.dart';
 import 'employeeModel.dart';
+import 'feedEmployer.dart';
 import 'workModel.dart';
 import 'categoryCard.dart';
 
@@ -16,6 +19,8 @@ class CategoryScreen extends StatefulWidget {
   }) : super(key: key);
   final String categoria;
   final String userType;
+
+
 
   @override
   State<CategoryScreen> createState() =>
@@ -60,6 +65,30 @@ class CategoryScreenState extends State<CategoryScreen> {
     
   }
 
+  void _employerFeed() async {
+    Navigator.of(context).push(
+      //widget de builder para abrir nueva pagina al hacer push al stack de navegacion
+      MaterialPageRoute(
+        builder: (context) {
+          //estructura de la pagina
+          return feedEmployer();
+        },
+      ),
+    );
+  }
+
+  void _employeeFeed() async {
+    Navigator.of(context).push(
+      //widget de builder para abrir nueva pagina al hacer push al stack de navegacion
+      MaterialPageRoute(
+        builder: (context) {
+          //estructura de la pagina
+          return feedEmployee();
+        },
+      ),
+    );
+  }
+
   @override
    Widget build(BuildContext context)  {
     if (userType == "employee")
@@ -67,6 +96,9 @@ class CategoryScreenState extends State<CategoryScreen> {
         appBar: AppBar(
           title: Text(widget.categoria),
           backgroundColor: categoriesIconsColors[categoria],
+            actions:<Widget>[
+              LastRoute(userType: 'employee')
+            ]
         ),
         body: FutureBuilder(
             future: _works,
@@ -121,12 +153,15 @@ class CategoryScreenState extends State<CategoryScreen> {
         appBar: AppBar(
           title: Text(widget.categoria),
           backgroundColor: categoriesIconsColors[categoria],
+            actions:<Widget>[
+              LastRoute( userType: "employer")
+            ]
         ),
         body: FutureBuilder(
             future: _employees,
             builder:
                   (BuildContext context, AsyncSnapshot<List<EmployeeModel>> _employees) {
-              
+
                 if (_employees.hasData) {
                   return ListView.builder(
                       itemCount: _employees.data!.length,
@@ -167,6 +202,8 @@ class CategoryScreenState extends State<CategoryScreen> {
                         ]));
                       });
                 } else {
+                  print('----lista-----.........................');
+                  print(_employees);
                   return CircularProgressIndicator();
                 }
             })),
@@ -179,6 +216,8 @@ class CategoryScreenState extends State<CategoryScreen> {
   }
 
   Future<List<EmployeeModel>> fetch_employees() async {
+
+
     return await dbController.getEmployees(this.categoria) as List<EmployeeModel>;
   }
 

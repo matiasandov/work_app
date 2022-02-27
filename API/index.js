@@ -27,7 +27,9 @@ app.get('/employeeCategories', (req, res) => {
 });
 
 app.get('/employeeCategories/:category', (req, res) => {
-    connection.query('SELECT * FROM `iwork`.`employees` WHERE category IS NOT NUL', [req.params.category], (err, results, fields) => {
+    // WHERE category = ?
+    //WHERE category IS NOT NUL esto seria lo mas facil y ya no necesesitaria todos los gets pero ahora tendria que modificar lo que recibe db
+    connection.query('SELECT * FROM `iwork`.`employees` WHERE ? IS NOT NULL', [req.params.category], (err, results, fields) => {
         if (err) {
             res.status(500).send('No se puede establecer conexion con base de datos');
         }
@@ -38,7 +40,7 @@ app.get('/employeeCategories/:category', (req, res) => {
 });
 
 app.get('/employeeCategories/:category2', (req, res) => {
-    connection.query('SELECT * FROM `iwork`.`employees` WHERE category2 IS NOT NUL', [req.params.category], (err, results, fields) => {
+    connection.query('SELECT * FROM `iwork`.`employees` WHERE category2 IS NOT NULL', [req.params.category], (err, results, fields) => {
         if (err) {
             res.status(500).send('No se puede establecer conexion con base de datos');
         }
@@ -50,7 +52,7 @@ app.get('/employeeCategories/:category2', (req, res) => {
 
 
 app.get('/employeeCategories/:category3', (req, res) => {
-    connection.query('SELECT * FROM `iwork`.`employees` WHERE category3 IS NOT NUL', [req.params.category], (err, results, fields) => {
+    connection.query('SELECT * FROM `iwork`.`employees` WHERE category3 IS NOT NULL', [req.params.category], (err, results, fields) => {
         if (err) {
             res.status(500).send('No se puede establecer conexion con base de datos');
         }
@@ -61,7 +63,7 @@ app.get('/employeeCategories/:category3', (req, res) => {
 });
 
 app.get('/employeeCategories/:category4', (req, res) => {
-    connection.query('SELECT * FROM `iwork`.`employees` WHERE category4 IS NOT NUL', [req.params.category], (err, results, fields) => {
+    connection.query('SELECT * FROM `iwork`.`employees` WHERE category4 IS NOT NULL', [req.params.category], (err, results, fields) => {
         if (err) {
             res.status(500).send('No se puede establecer conexion con base de datos');
         }
@@ -72,7 +74,7 @@ app.get('/employeeCategories/:category4', (req, res) => {
 });
 
 app.get('/employeeCategories/:category5', (req, res) => {
-    connection.query('SELECT * FROM `iwork`.`employees` WHERE category2 IS NOT NUL', [req.params.category], (err, results, fields) => {
+    connection.query('SELECT * FROM `iwork`.`employees` WHERE category5 IS NOT NULL', [req.params.category], (err, results, fields) => {
         if (err) {
             res.status(500).send('No se puede establecer conexion con base de datos');
         }
@@ -83,7 +85,7 @@ app.get('/employeeCategories/:category5', (req, res) => {
 });
 
 app.get('/employeeCategories/:category6', (req, res) => {
-    connection.query('SELECT * FROM `iwork`.`employees` WHERE category2 IS NOT NUL', [req.params.category], (err, results, fields) => {
+    connection.query('SELECT * FROM `iwork`.`employees` WHERE category6 IS NOT NULL', [req.params.category], (err, results, fields) => {
         if (err) {
             res.status(500).send('No se puede establecer conexion con base de datos');
         }
@@ -105,6 +107,7 @@ app.get('/jobCategories', (req, res) => {
 });
 
 app.get('/jobCategories/:category', (req, res) => {
+    //WHERE category = ?
     connection.query('SELECT * FROM `iwork`.`jobs` WHERE category = ?', [req.params.category], (err, results, fields) => {
         if (err) {
             res.status(500).send('No se puede establecer conexion con base de datos');
@@ -116,6 +119,8 @@ app.get('/jobCategories/:category', (req, res) => {
 });
 
 app.post('/employee', function(request, response){
+
+    
     let sql = 'INSERT INTO employees SET ?'
 
     let post = {
@@ -146,8 +151,11 @@ app.post('/employee', function(request, response){
 });
 
 app.post('/employer', function(request, response){
-    let sql = 'INSERT INTO employer SET ?'
+    console.log("se intentara poner employer")
 
+    let sql = 'INSERT INTO employer SET ?'
+    //el problema debe estar aqui que no encuenta bien los nombres o algo
+    //porque si imprime los nombres
     let post = {
         interests : request.query.interests,
         person_or_business : request.query.person_or_business,
