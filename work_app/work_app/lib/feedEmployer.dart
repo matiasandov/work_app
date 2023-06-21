@@ -11,18 +11,16 @@ class feedEmployer extends StatefulWidget {
 }
 
 class _feedEmployerState extends State<feedEmployer> {
-
   int _pageIndex = 0;
   late PageController _pageController;
 
   List<Widget> tabPages = [
     Screen1(),
     Screen2(),
-
   ];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _pageController = PageController(initialPage: _pageIndex);
   }
@@ -40,25 +38,20 @@ class _feedEmployerState extends State<feedEmployer> {
   }
 
   void onTabTapped(int index) {
-    this._pageController.animateToPage(index,duration: const Duration(milliseconds: 500),curve: Curves.easeInOut);
+    this._pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          primarySwatch: Colors.cyan
-      ),
+      theme: ThemeData(primarySwatch: Colors.cyan),
       home: Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text("Find employees"),
         ),
-
-
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.cyan,
@@ -69,15 +62,13 @@ class _feedEmployerState extends State<feedEmployer> {
           onTap: onTabTapped,
           items: [
             BottomNavigationBarItem(
-              title: Text('Feed'),
+              label: 'Feed',
               icon: Icon(Icons.feed),
             ),
             BottomNavigationBarItem(
-              title: Text('Requests and Offers'),
+              label: 'Requests and Offers',
               icon: Icon(Icons.notifications),
-
             ),
-
           ],
         ),
         body: PageView(
@@ -85,13 +76,9 @@ class _feedEmployerState extends State<feedEmployer> {
           onPageChanged: onPageChanged,
           controller: _pageController,
         ),
-
       ),
     );
-
   }
-
-
 }
 
 class Screen1 extends StatelessWidget {

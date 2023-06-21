@@ -10,18 +10,16 @@ class feedEmployee extends StatefulWidget {
 }
 
 class _feedEmployeeState extends State<feedEmployee> {
-
   int _pageIndex = 0;
   late PageController _pageController;
 
   List<Widget> tabPages = [
     Screen1(),
     Screen2(),
-
   ];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _pageController = PageController(initialPage: _pageIndex);
   }
@@ -39,10 +37,9 @@ class _feedEmployeeState extends State<feedEmployee> {
   }
 
   void onTabTapped(int index) {
-    this._pageController.animateToPage(index,duration: const Duration(milliseconds: 500),curve: Curves.easeInOut);
+    this._pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -52,46 +49,38 @@ class _feedEmployeeState extends State<feedEmployee> {
         // the App.build method, and use it to set our appbar title.
         title: Text("Jobs opportunities"),
       ),
-
-
       bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Color(0xFF004FEE),
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withOpacity(.60),
-            selectedFontSize: 14,
-            unselectedFontSize: 14,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Color(0xFF004FEE),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withOpacity(.60),
+        selectedFontSize: 14,
+        unselectedFontSize: 14,
         onTap: onTabTapped,
-            items: [
-              BottomNavigationBarItem(
-                title: Text('Feed'),
-                icon: Icon(Icons.feed),
-              ),
-              BottomNavigationBarItem(
-                title: Text('Requests and Offers'),
-                icon: Icon(Icons.notifications),
-
-              ),
-
-            ],
+        items: [
+          BottomNavigationBarItem(
+            label: 'L',
+            icon: Icon(Icons.feed),
           ),
+          BottomNavigationBarItem(
+            label: 'Requests and Offers',
+            icon: Icon(Icons.notifications),
+          ),
+        ],
+      ),
       body: PageView(
         children: tabPages,
         onPageChanged: onPageChanged,
         controller: _pageController,
       ),
-
-      );
-
+    );
   }
-
-
 }
 
 class Screen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  categoriesFeed(userType:'employee');
+    return categoriesFeed(userType: 'employee');
   }
 }
 
@@ -99,6 +88,5 @@ class Screen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return notificationsE();
-
   }
 }
